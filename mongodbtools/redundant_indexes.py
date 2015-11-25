@@ -45,16 +45,16 @@ def get_cli_options():
 
     return options
 
-def get_connection(host, port, username, password):
+def get_connection(host, port, database, username, password):
     userPass = ""
     if username and password:
         userPass = username + ":" + password + "@"
 
-    mongoURI = "mongodb://" + userPass + host + ":" + str(port)
+    mongoURI = "mongodb://" + userPass + host + ":" + str(port) + '/' + database
     return Connection(host=mongoURI, read_preference=ReadPreference.SECONDARY)
 
 def main(options):
-    connection = get_connection(options.host, options.port, options.user, options.password)
+    connection = get_connection(options.host, options.port, options.database, options.user, options.password)
 
     def compute_signature(index):
         signature = index["ns"]
